@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="ne">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Government of Nepal - Prize Winner 2026</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
+  body {
+    background: linear-gradient(135deg, #0b1a4a 0%, #123 50%, #0b1a4a 100%);
+    min-height: 100vh;
+    color: #fff;
+  }
+  .topbar {
+    background: #b11116;
+    color: #fff;
+    text-align: center;
+    padding: 8px;
+    font-size: 14px;
+    animation: blink 1.5s infinite;
+  }
+  @keyframes blink { 50% { opacity: 0.6; } }
+  .header {
+    text-align: center;
+    padding: 30px 15px 10px;
+  }
+  .header .lion {
+    font-size: 54px;
+  }
+  .header h1 {
+    font-size: 26px;
+    margin-top: 8px;
+    color: #ffd700;
+  }
+  .header h2 {
+    font-size: 16px;
+    font-weight: normal;
+    color: #cfe0ff;
+    margin-top: 6px;
+  }
+  .winner-card {
+    max-width: 620px;
+    margin: 25px auto;
+    background: linear-gradient(145deg, #fff8d6, #ffe98a);
+    color: #222;
+    border: 6px solid #ffd700;
+    border-radius: 16px;
+    padding: 30px 25px;
+    text-align: center;
+    box-shadow: 0 0 40px rgba(255, 215, 0, 0.6);
+    animation: pop 0.6s ease-out;
+  }
+  @keyframes pop {
+    0% { transform: scale(0.5); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+  }
+  .winner-card .label {
+    font-size: 18px;
+    color: #b11116;
+    font-weight: bold;
+    letter-spacing: 1px;
+  }
+  .winner-card .amount {
+    font-size: 58px;
+    font-weight: 900;
+    color: #0b7a3b;
+    margin: 12px 0;
+    text-shadow: 2px 2px 0 #fff;
+  }
+  .winner-card .who {
+    font-size: 30px;
+    font-weight: bold;
+    color: #b11116;
+    margin-top: 10px;
+  }
+  .countdown {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin: 25px 0 10px;
+  }
+  .countdown div {
+    background: #000;
+    color: #0f0;
+    font-size: 26px;
+    font-weight: bold;
+    padding: 10px 14px;
+    border-radius: 8px;
+    min-width: 70px;
+  }
+  .countdown span {
+    display: block;
+    font-size: 11px;
+    color: #aaa;
+  }
+  .claim-btn {
+    display: block;
+    width: 320px;
+    max-width: 90%;
+    margin: 25px auto;
+    padding: 20px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #fff;
+    background: linear-gradient(#ff4d4d, #b11116);
+    border: 4px solid #ffd700;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 6px 0 #7a0b0e;
+    animation: pulse 1s infinite;
+  }
+  @keyframes pulse { 50% { transform: scale(1.04); } }
+  .claim-btn:active { transform: translateY(4px); box-shadow: 0 2px 0 #7a0b0e; }
+  .subtext {
+    text-align: center;
+    color: #9fb7ff;
+    font-size: 14px;
+    padding: 0 15px 10px;
+  }
+  .comments {
+    max-width: 620px;
+    margin: 25px auto 60px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 12px;
+    padding: 20px;
+  }
+  .comments h3 {
+    text-align: center;
+    margin-bottom: 18px;
+    color: #ffd700;
+    font-size: 20px;
+  }
+  .comment {
+    display: flex;
+    gap: 12px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 50px;
+    padding: 12px 16px;
+    margin-bottom: 12px;
+    align-items: center;
+  }
+  .avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: #ffd700;
+    color: #b11116;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+  .comment .name { font-weight: bold; color: #ffe27a; font-size: 14px; }
+  .comment .text { font-size: 15px; margin-top: 3px; }
+  .comment .time { font-size: 11px; color: #8899cc; margin-top: 4px; }
+  .verified { color: #4dff88; font-size: 12px; }
+
+  /* reveal overlay */
+  #reveal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.94);
+    color: #fff;
+    z-index: 99;
+    padding: 40px 20px;
+    overflow: auto;
+  }
+  #reveal .box {
+    max-width: 680px;
+    margin: 40px auto;
+    text-align: center;
+  }
+  #reveal h2 { color: #ff5252; font-size: 34px; margin-bottom: 18px; }
+  #reveal p { font-size: 18px; line-height: 1.7; margin-bottom: 14px; color: #ddd; }
+  #reveal ul { text-align: left; max-width: 560px; margin: 20px auto; font-size: 16px; line-height: 2; color: #ffd; }
+  #reveal button {
+    margin-top: 20px;
+    padding: 14px 30px;
+    font-size: 18px;
+    background: #ffd700;
+    color: #000;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  .footer {
+    text-align: center;
+    font-size: 12px;
+    color: #556699;
+    padding: 20px;
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">⚠ सूचना: तपाईंको नाममा <b>रु. ५,००,००,०००/-</b> जित्नुभयो! Claim गर्न बाँकी समय सीमित छ ⚠</div>
+
+<div class="header">
+  <div class="lion">🇳🇵</div>
+  <h1>GOVERNMENT OF NEPAL — ONLINE PRIZE DISTRIBUTION 2026</h1>
+  <h2>सञ्चार मन्त्रालय / Department of Online Lottery</h2>
+</div>
+
+<div class="winner-card">
+  <div class="label">🎉 CONGRATULATIONS! 🎉</div>
+  <div class="amount">रु. 5,00,00,000</div>
+  <div style="font-size:16px;">FIFTY LAKH RUPEES WINNER ANNOUNCED</div>
+  <div class="who">"kalu le 50000000 jityo"</div>
+  <div style="font-size:14px; margin-top:8px; color:#555;">Winner ID: GON-2026-NP-098231</div>
+</div>
+
+<div class="countdown" id="cd">
+  <div id="h">00<span>HRS</span></div>
+  <div id="m">00<span>MIN</span></div>
+  <div id="s">00<span>SEC</span></div>
+</div>
+
+<button class="claim-btn" onclick="fakeClaim()">💰 CLAIM YOUR PRIZE NOW 💰</button>
+
+<p class="subtext">तपाईंले यो रकम क्लेम गर्न बाँकी <b id="mins">14</b> मिनेट मात्र छ। छिटो थिच्नुहोस्!</p>
+
+<div class="comments">
+  <h3>💬 Live Winners Comments</h3>
+
+  <div class="comment">
+    <div class="avatar">SD</div>
+    <div>
+      <div class="name">Sita Devi Thapa <span class="verified">✔ Verified Winner</span></div>
+      <div class="text">म पनि जितेँ! मलाई ५० लाख आयो, आज नै बैंकमा जम्मा भयो। साँच्चै हो हजुर, भनोस न मलाई! 🙏</div>
+      <div class="time">2 minutes ago</div>
+    </div>
+  </div>
+
+  <div class="comment">
+    <div class="avatar">RG</div>
+    <div>
+      <div class="name">Ram Gurung <span class="verified">✔ Verified Winner</span></div>
+      <div class="text">म पनि जितेँ म नि जितेँ! पहिले बिश्वास थिएन तर रकम आयो। सबैले claim गर्नुहोस् छिटो!</div>
+      <div class="time">5 minutes ago</div>
+    </div>
+  </div>
+
+  <div class="comment">
+    <div class="avatar">BK</div>
+    <div>
+      <div class="name">Bikash Kami <span class="verified">✔ Verified Winner</span></div>
+      <div class="text">म पनि जितेँ!!! धमिलाई पनि जित्यो। यो site मा केही data जाँदैन रे, मैले आफ्नै घरबाट क्लेम गरे। अब तिमीहरू पनि गर।</div>
+      <div class="time">8 minutes ago</div>
+    </div>
+  </div>
+
+  <div class="comment">
+    <div class="avatar">MS</div>
+    <div>
+      <div class="name">Maya Shrestha <span class="verified">✔ Verified Winner</span></div>
+      <div class="text">म पनि जितेँ हजुर! माइतीहरूलाई पनि पठाएँ, उनीहरू पनि जिते। सरकारको साँच्चै योजना हो के।</div>
+      <div class="time">12 minutes ago</div>
+    </div>
+  </div>
+
+  <div class="comment">
+    <div class="avatar">HP</div>
+    <div>
+      <div class="name">Hari Prasad Chaudhary <span class="verified">✔ Verified Winner</span></div>
+      <div class="text">म पनि जितेँ भनेकै छु। आमालाई पनि फोन गरेर भनेँ, उहाँ पनि जित्नुभएछ। सबै जित्छन् जस्तो छ।</div>
+      <div class="time">18 minutes ago</div>
+    </div>
+  </div>
+
+  <div class="comment">
+    <div class="avatar">AN</div>
+    <div>
+      <div class="name">Anjali Nagarkoti <span class="verified">✔ Verified Winner</span></div>
+      <div class="text">म पनि जितेँ रे! सानो भाइलाई पनि लिन लगाएँ, उसलाई पनि आयो। चाँडै गर्नुहोस् हजुरहरू।</div>
+      <div class="time">24 minutes ago</div>
+    </div>
+  </div>
+
+  <div class="comment">
+    <div class="avatar">KL</div>
+    <div>
+      <div class="name">Kalu Lama <span class="verified">✔ Verified Winner</span></div>
+      <div class="text">म पनि जितेँ! ५००००००० जितेँ, आज नै नेपाल बैंकमा पुगेँ। साँच्चै धन्यवाद सरकारजी। 🇳🇵</div>
+      <div class="time">31 minutes ago</div>
+    </div>
+  </div>
+
+  <div class="comment">
+    <div class="avatar">PS</div>
+    <div>
+      <div class="name">Prakash Sunar <span class="verified">✔ Verified Winner</span></div>
+      <div class="text">म पनि जितेँ म नि जितेँ! मेरो छोराले पनि यही link खोलेको थियो, उसलाई पनि आयो।</div>
+      <div class="time">45 minutes ago</div>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  This page captures NO data and sends NOTHING anywhere. Pure HTML/CSS.
+  <br><br>
+  <a href="#" onclick="showReveal()" style="color:#ffd700;">⚠ यो page कसरी बनियो? हेर्न यहाँ थिच्नुहोस् ⚠</a>
+</div>
+
+<div id="reveal">
+  <div class="box">
+    <h2>⚠ यो SCAM PAGE हो ⚠</h2>
+    <p><b>यो पूरै page एकै HTML फाइल हो — मैले केही मिनेटमा बनाएँ।</b> यसमा कुनै data जाँदैन, कुनै फर्म छैन, कुनै पैसा छैन। सबै कुरा लुकेको छ।</p>
+    <ul>
+      <li>🚩 "५० लाख जित्नुभयो" — कुनै प्रमाण छैन, जसले भन्यो त्यसले नै लेख्यो।</li>
+      <li>🚩 तलका "म पनि जितेँ" का comment — सबै नाम र कुरा मैले आफैं लेखें, एकजनाले पनि जितेको छैन।</li>
+      <li>🚩 नाम "Kalu Lama", "Sita Devi Thapa" जस्तो चिनारी दिने नामहरू राखेर भरोसा दिइन्छ।</li>
+      <li>🚩 Countdown घडी — छिटो गर भन्ने डर दिन्छ, त्यसैमा विवेक बिर्सिन्छ।</li>
+      <li>🚩 सरकारको नाम, झण्डा, मन्त्रालय — कुनै कागजात छैन।</li>
+      <li>🚩 असली scam मा यही button तल तपाईंको नाम, फोन, बैंक खाता मागिन्छ — त्यहीँ पछि ठगी सुरु हुन्छ।</li>
+    </ul>
+    <p>👉 <b>सन्देह गर्नुहोस्:</b> कसैले जित्नुभयो भन्ने प्रमाण माग्नुहोस्। सरकारले कहिल्यै लिंकमा जित्ने सूचना दिँदैन।</p>
+    <button onclick="hideReveal()">बुझेँ, पछि फर्कनुहोस्</button>
+  </div>
+</div>
+
+<script>
+  // Countdown timer (cosmetic only)
+  let total = 14 * 60 + 59;
+  setInterval(() => {
+    if (total > 0) total--;
+    const h = Math.floor(total / 3600);
+    const m = Math.floor((total % 3600) / 60);
+    const s = total % 60;
+    document.getElementById('h').innerHTML = String(h).padStart(2,'0') + '<span>HRS</span>';
+    document.getElementById('m').innerHTML = String(m).padStart(2,'0') + '<span>MIN</span>';
+    document.getElementById('s').innerHTML = String(s).padStart(2,'0') + '<span>SEC</span>';
+    document.getElementById('mins').textContent = m;
+  }, 1000);
+
+  // No data capture — button only reveals the awareness message
+  function fakeClaim() {
+    showReveal();
+  }
+  function showReveal() {
+    document.getElementById('reveal').style.display = 'block';
+  }
+  function hideReveal() {
+    document.getElementById('reveal').style.display = 'none';
+  }
+</script>
+</body>
+</html>
